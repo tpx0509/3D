@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en" ondragstart="return false">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style lang="">
+        body {
+            background: #000;
+            overflow: hidden;
+        }
+        #perspective {
+            perspective: 800px; /*景深*/
+        }
+        .wrap {
+            position: relative;
+            width: 150px;
+            height: 200px;
+            margin: 200px auto;
+            border:1px solid #f00;
+            transform-style: preserve-3d;
+            transform : rotateX(-20deg);
+        }
+        .wrap img{
+            position: absolute;
+            width: 150px;
+            height: 200px;
+        }
+    </style>
+</head>
+<body>
+    <div id="perspective">
+        <div class="wrap" id="wrap">
+            <img src="./images/img (1).jpg" alt="">
+            <img src="./images/img (2).jpg" alt="">
+            <img src="./images/img (3).jpg" alt="">
+            <img src="./images/img (4).jpg" alt="">
+            <img src="./images/img (5).jpg" alt="">
+            <img src="./images/img (6).jpg" alt="">
+            <img src="./images/img (7).jpg" alt="">
+            <img src="./images/img (8).jpg" alt="">
+            <img src="./images/img (9).jpg" alt="">
+            <img src="./images/img (10).jpg" alt="">
+            <img src="./images/img (11).jpg" alt="">
+        </div>
+    </div>
+</body>
+<script>
+    let oImg = document.getElementsByTagName("img");
+    let owrap = document.getElementById("wrap")
+    let len = oImg.length;
+    let deg = 360/len; 
+    window.onload = function(){
+         for(let i=0;i<len;i++){
+            oImg[i].style.transform = `rotateY(${deg*i}deg) translateZ(350px)`;
+            oImg[i].style.transition = `1s ${(len-i)*0.1}s`;
+        }
+    }
+   /*
+    拖拽
+    每一次移动 相册旋转多少
+    两次鼠标移动位置的差值 就是移动的距离
+    新的位置-上一次的位置 = 差值
+   */
+    document.onmousedown = function(e){
+        let newX,newY,lastX,lastY,minusX,minusY,rotX=-20,rotY=0;
+            lastX = e.clientX;
+            lastY = e.clientY;
+        this.onmousemove = function(e){
+            newX = e.clientX;
+            newY = e.clientY;
+            //假设 求出了差值
+            minusX = newX-lastX;
+            minusY = newY-lastY;
+
+            rotX += -minusY*0.2;
+            rotY += minusX*0.2;  //差值累加成为一个新的旋转度数值
+            owrap.style.transform = `rotateX(${rotX}deg) rotateY(${rotY}deg)`
+            //新值在用完之后就变成了旧值
+            lastX = newX;
+            lastY = newY;
+        }
+        this.onmouseup = function(e){
+            this.onmousemove=null;
+        }
+    }
+    
+</script>
+</html>
