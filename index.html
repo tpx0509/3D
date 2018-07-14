@@ -9,6 +9,7 @@
         body {
             background: #000;
             overflow: hidden;
+            user-select : none;
         }
         #perspective {
             perspective: 800px; /*景深*/
@@ -18,7 +19,6 @@
             width: 150px;
             height: 200px;
             margin: 200px auto;
-            border:1px solid #f00;
             transform-style: preserve-3d;
             transform : rotateX(-20deg);
         }
@@ -26,6 +26,9 @@
             position: absolute;
             width: 150px;
             height: 200px;
+            border-radius: 5px;
+            box-reflect:below;
+            -webkit-box-reflect: below 10px -webkit-gradient(linear, left top, left bottom, from(transparent), to(rgba(250, 250, 250, 0.7)));
         }
     </style>
 </head>
